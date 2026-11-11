@@ -1,0 +1,4 @@
+import fs from 'node:fs';import path from 'node:path';
+const root=path.resolve(import.meta.dirname,'../dist');if(!fs.existsSync(root))throw Error('Run npm run build first');
+function files(dir){return fs.readdirSync(dir,{withFileTypes:true}).flatMap(x=>x.isDirectory()?files(path.join(dir,x.name)):[path.join(dir,x.name)])}let html=files(root).filter(x=>x.endsWith('.html'));let errors=[];for(const f of html){const text=fs.readFileSync(f,'utf8');for(const check of ['<h1','<title>','name="description"','rel="canonical"','application/ld+json','name="robots"','id="main-content"'])if(!text.includes(check))errors.push(`${f}: missing ${check}`);const h1=text.match(/<h1\b/g)||[];if(h1.length!==1)errors.push(`${f}: ${h1.length} H1 tags`)}
+if(errors.length){console.error(errors.join('\n'));process.exit(1)}console.log(`Validated ${html.length} HTML documents, each with H1, metadata, schema, canonical, robots and main landmark.`)

@@ -1,0 +1,5 @@
+{
+  "name":"ngd-media-website","private":true,"version":"1.0.0","type":"module",
+  "scripts":{"build":"node src/build.mjs","dev":"node src/dev.mjs","preview":"node src/dev.mjs","check":"node src/check.mjs"},
+  "engines":{"node":">=20"}
+}
