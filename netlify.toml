@@ -1,12 +1,23 @@
 [build]
-  command = "npm run build"
   publish = "dist"
+
 [build.environment]
   NODE_VERSION = "22"
+
+# Temporarily make the landing page the homepage
+[[redirects]]
+  from = "/"
+  to = "/launch/"
+  status = 302
+  force = true
+
+# Existing thank-you redirect
 [[redirects]]
   from = "/thank-you/"
   to = "/contact/?submitted=1"
   status = 302
+
+# Custom 404 page
 [[redirects]]
   from = "/*"
   to = "/404.html"
